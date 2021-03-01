@@ -25,7 +25,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use(cors());
 
-//Middleware to get HTTP request's methods info
+//Middleware to get HTTP requests info
 app.use(morgan('dev'));
 
 //Settings -- OJO -> Mover a un archivo oculto aparte (como en el video)¿? 
