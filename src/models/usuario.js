@@ -11,6 +11,10 @@ const usuarioSchema = Schema({
     },
     imgSrc: {
         type: String
+    },
+    favRefs: {
+        type: Array,
+        default: []
     }
 })
 

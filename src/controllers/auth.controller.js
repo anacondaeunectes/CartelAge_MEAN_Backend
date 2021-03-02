@@ -8,43 +8,43 @@ const Usuario = require('../models/usuario');
 const jwt = require('jsonwebtoken');
 
 
-// This method gets a token and 
+// This method gets a token and both verify user identity and generates a JWT
 const googleSignIn = async (req, res) => {
 
     // console.log('22: ', req.header('user-agent'))
     
     const { userToken } = req.body;  
 
-    // console.log(req.body)  
+    let usuario;
 
     try {
         const { name, imgSrc, email } = await googleVerify(userToken);
 
         //Search the user by it's email in the DB
-        const usuario = await Usuario.findOne({ email });
+        usuario = await Usuario.findOne({ email });
+
+        
 
         //If no user it's found on DB, a new record will be created in DB.
         if(!usuario){
 
-            const newUser = new Usuario({name, imgSrc, email}).save();
-            if(newUser){
+            usuario = await new Usuario({name, imgSrc, email}).save();
+            if(usuario){
                 console.log('A new user has been succesfully recorded')
             }
 
-        }else{
+        }
 
-            const token = await generarJWT( usuario.id );
+            const token = await generarJWT( usuario._id );
 
             // console.log('token: ', token)
             
             res.json({
                 usuario,
-                token
+                // token
             });
 
-        }
-
-        // console.log(usuario);
+        
 
     } catch (error) {
         console.log(error)
@@ -63,7 +63,6 @@ const googleVerify = async( idToken ) => {
         audience: keys.web.client_id
     });
 
-    // console.log('ticket:', ticket)
   
     const { name, 
             picture: imgSrc, 

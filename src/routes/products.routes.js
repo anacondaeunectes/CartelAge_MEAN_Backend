@@ -4,14 +4,6 @@ const router = require('express-promise-router')();
 // Multer is a middleware that allows to upload files
 const multer = require('multer');
 
-// ----------------------------
-
-
-
-
-
-//-----------------------------
-
 /* 
 * Multer configuration: 
     - "destination" set the destination folder
@@ -29,26 +21,36 @@ const upload = multer({storage: storage});
 
 const googleAuth = require('../controllers/auth.controller');
 
-const filmModel = require('../models/Product');
+const filmModel = require('../models/Film');
 
-const productCtrl = require('../controllers/products.controller');
+const Usuario = require('../models/usuario');
 
-router.get('/product', productCtrl.getProducts);
+const filmCtrl = require('../controllers/films.controller');
 
-router.get('/product/:id', productCtrl.getProduct);
+// ----------------------------------------
+//  Related with films
+// ----------------------------------------
 
-router.post('/product', productCtrl.createProduct);
+router.get('/film', filmCtrl.getFilms);
 
-router.post('/product', async (req, res) => {
-    console.log('here i am v2');
-});
+router.get('/film/:id', filmCtrl.getFilm);
+
+router.post('/film', filmCtrl.createFilm);
+
+router.put('/film/:id', filmCtrl.editFilm);
+
+router.delete('/film/:id', filmCtrl.deleteFilm);
+
+// ----------------------------------------
+//  Image upload
+// ----------------------------------------
 
 router.post('/photo', upload.single('image'), async (req, res) => {
-    const { title, description } = req.body;
+    const { name } = req.body;
 
     const film = {
-        name: title,
-        description: description,
+        name/*: title*/,
+        // description: description,
         imagePath: req.file.path
     }
 
@@ -56,37 +58,22 @@ router.post('/photo', upload.single('image'), async (req, res) => {
 
     await filmToSave.save();
     
-    res.json({message: 'LLego', filmToSave})
+    res.json({message: 'Succesfully uploaded', filmToSave})
 });
 
-router.put('/product/:id', productCtrl.editProduct);
-
-router.delete('/product/:id', productCtrl.deleteProduct);
+// ----------------------------------------
+//  Related with google auth
+// ----------------------------------------
 
 router.post('/google/auth', async (req, res) => {
-    // console.log(req.body)
 
     googleAuth.googleSignIn(req, res);
-
-    // const ticket = await client.verifyIdToken({
-    //     idToken: req.body.token,
-    //     audience: keys.web.client_id
-    // })
-    
-    // const { name: nombre, 
-    //     picture: img, 
-    //     email: correo
-    //   } = ticket.getPayload();
-
-    //   console.log(ticket.getPayload())
-}
-)
+})
 
 
 router.use( (err, req, res, next) => {
     console.error('Message Error: ', err.message)
     res.status(403).send(err.message);
-    // console.log('OJOOOOO')
 })
 
 
