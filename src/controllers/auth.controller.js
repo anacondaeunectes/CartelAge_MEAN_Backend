@@ -35,14 +35,12 @@ const googleSignIn = async (req, res) => {
 
         }
 
-            const token = await generarJWT( usuario._id );
-
-            // console.log('token: ', token)
-            
-            res.json({
-                usuario,
-                // token
-            });
+        const token = await generarJWT( usuario._id );
+        
+        res.json({
+            usuario,
+            // token
+        });
 
         
 

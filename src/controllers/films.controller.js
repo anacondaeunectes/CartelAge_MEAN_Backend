@@ -1,3 +1,4 @@
+// Controller for films related requests
 const filmCtrl = {};
 
 const Film = require('../models/Film');
@@ -20,9 +21,7 @@ filmCtrl.createFilm = async (req, res) => {
 
 filmCtrl.getFilm = async (req, res) => {
     console.log(req.params);
-    // console.log(err)
     const filmResult = await Film.findOne({_id: req.params.id});
-    // console.log(productResult.imagePath);
     res.send(filmResult);
 
 };

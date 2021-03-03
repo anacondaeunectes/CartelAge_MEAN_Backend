@@ -27,6 +27,8 @@ const Usuario = require('../models/usuario');
 
 const filmCtrl = require('../controllers/films.controller');
 
+const userCtrl = require('../controllers/usuario.controller');
+
 // ----------------------------------------
 //  Related with films
 // ----------------------------------------
@@ -62,13 +64,19 @@ router.post('/photo', upload.single('image'), async (req, res) => {
 });
 
 // ----------------------------------------
-//  Related with google auth
+//  Related with user - google auth
 // ----------------------------------------
 
 router.post('/google/auth', async (req, res) => {
 
     googleAuth.googleSignIn(req, res);
 })
+
+router.get('/user/:id', userCtrl.getUser);
+
+router.put('/user/fav/:id', userCtrl.favFilm);
+
+router.put('/user/unfav/:id', userCtrl.unfavFilm);
 
 
 router.use( (err, req, res, next) => {

@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 
+// Moongose Schema for users documents
 const usuarioSchema = Schema({
     name: {
         type: String,
@@ -18,4 +19,5 @@ const usuarioSchema = Schema({
     }
 })
 
+//Mongoose model to define 'usuarios' MongoDB collection 
 module.exports = model('usuario', usuarioSchema);
