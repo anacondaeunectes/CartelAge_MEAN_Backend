@@ -6,7 +6,7 @@
 *    Server uses:
 *       - 'Express' as HTTP request handler
 *       - 'Mongoose' as server - DB (MongoDB) intermediary
-*       - 'Multer' as File Uploader manager middleware (on products.routes.js)
+*       - 'Multer' as File Uploader manager middleware (on pfilms.routes.js)
 *       - 'Morgan' to read basic info of every http request that this server receive
 *       - 'Path' in order to achieve an easier file's path manage
 *       - 'Cors`in order to enable all CORS requests 
@@ -37,7 +37,7 @@ app.use(morgan('dev'));
 app.set('port', config.port || 3000);
 
 //Every route is going to be handled by the JS file of the parameter
-app.use('/api', require('./routes/products.routes'));
+app.use('/api', require('./routes/films.routes'));
 
 app.use('/photo', express.static(path.resolve('uploads')));
 app.use('/uploads', express.static(path.resolve('uploads')));

@@ -23,8 +23,6 @@ const googleSignIn = async (req, res) => {
         //Search the user by it's email in the DB
         usuario = await Usuario.findOne({ email });
 
-        
-
         //If no user it's found on DB, a new record will be created in DB.
         if(!usuario){
 
@@ -41,8 +39,6 @@ const googleSignIn = async (req, res) => {
             usuario,
             // token
         });
-
-        
 
     } catch (error) {
         console.log(error)

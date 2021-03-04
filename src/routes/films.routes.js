@@ -78,7 +78,9 @@ router.put('/user/fav/:id', userCtrl.favFilm);
 
 router.put('/user/unfav/:id', userCtrl.unfavFilm);
 
+router.put('/user/unfav', userCtrl.unfavFilmToAllUsers);
 
+// Error management
 router.use( (err, req, res, next) => {
     console.error('Message Error: ', err.message)
     res.status(403).send(err.message);
